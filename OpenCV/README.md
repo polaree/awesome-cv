@@ -37,22 +37,51 @@ cd opencv-3.4.5
 cd <opencv 解压后目录>
 mkdir build
 cd build
-cmake -G "Unix Makefiles" ..
+rm ../CMakeCache.txt
+cmake ..
 make -j8
 sudo make install
 ```
-所有的opencv library，就在/Users/your_user_name/opencv/opencv-3.4.0/build/lib中了。
+所有的opencv library，就在 opencv解压目录/build/lib 中了。
 > 一般都不会出问题，在虚拟环境不一定能成功。
-参考自 [编译安装opencv](http://wiki.opencv.org.cn/index.php/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91)
 
-### 写个OpenCV Demo
-#### pkg-config 环境配置
+这里请保存下 opencv 解压后目录，后面需要用到。
+
+### 写个C++ Hello World
+```
+#include <stdio.h>
+#include <iostream>
+
+int main(int argc, const char * argv[]) {
+    std::cout << "Hello, World!\n";
+    return 0;
+}
+```
+如果能够成功输出 Hello, world! 就尝试在代码中引入 OpenCV 库
+
+### pkg-config 环境配置
 安装好后，配置一个环境变量就行了。
 ```
-PKG_CONFIG_PATH="~/opencv解压目录/release/unix-install"
-PKG_CONFIG_PATH="/Users/bytedance/Documents/package/opencv-3.4.12/build/unix-install"
+PKG_CONFIG_PATH="opencv解压目录/build/unix-install"
 ```
 配置好之后在执行命令：
 ```
 pkg-config opencv --libs --cflags opencv
 ```
+> 该环境变量就是为了让 pkg-config 能够找到 opencv.pc 这个文件。
+
+### 写个OpenCV Demo
+进入到命令行环境
+```
+## 编译测试程序
+g++ `pkg-config opencv --libs --cflags opencv` ./test.cpp -o ./test.o
+## 运行测试程序
+./test.o
+```
+> pkg-config 这条命令是为编译 opencv 测试代码引入类库。
+如果能够成功显示图片，则代表 opencv 已经安装成功了。
+
+
+参考：
+https://segmentfault.com/a/1190000019604411
+https://www.jianshu.com/p/a36d41241ae8

@@ -18,7 +18,9 @@ int main( int argc, char** argv )
 {
 
     /// 读取一副图片，不改变图片本身的颜色类型（该读取方式为DOS运行模式）
-    src = imread(argv[1], 1 );
+    string path = "./images/image.png";
+    src = imread(path, 1 );
+    cout << "path: " << path << endl;
 
     /// 将图片转换成灰度图片
     cvtColor(src, src_gray, CV_RGB2GRAY);
