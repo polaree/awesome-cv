@@ -9,7 +9,7 @@ using namespace cv;
 
 Mat src, dst, src_gray;
 
-char* window_name = "Demo";
+string window_name = "Demo";
 
 /**
  * @主函数
@@ -17,7 +17,7 @@ char* window_name = "Demo";
 int main( int argc, char** argv )
 {
 
-    /// 读取一副图片，不改变图片本身的颜色类型（该读取方式为DOS运行模式）
+    /// 读取一副图片，不改变图片本身的颜色类型（该读取方式为DOS运行模式N
     string path = "./images/image.png";
     src = imread(path, 1 );
     cout << "path: " << path << endl;

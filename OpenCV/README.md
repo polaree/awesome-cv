@@ -45,7 +45,7 @@ sudo make install
 所有的opencv library，就在 opencv解压目录/build/lib 中了。
 > 一般都不会出问题，在虚拟环境不一定能成功。
 
-这里请保存下 opencv 解压后目录，后面需要用到。
+这里请保存下 opencv 解压后目录，后面需要用到。如：/Users/bytedance/Documents/package/opencv-3.4.5
 
 ### 写个C++ Hello World
 ```
@@ -57,7 +57,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 ```
-如果能够成功输出 Hello, world! 就尝试在代码中引入 OpenCV 库
+如果能够成功输出 Hello, world! 就尝试在代码中引入 OpenCV 库。
 
 ### pkg-config 环境配置
 安装好后，配置一个环境变量就行了。
@@ -79,8 +79,46 @@ g++ `pkg-config opencv --libs --cflags opencv` ./test.cpp -o ./test.o
 ./test.o
 ```
 > pkg-config 这条命令是为编译 opencv 测试代码引入类库。
-如果能够成功显示图片，则代表 opencv 已经安装成功了。
+> 如果能够成功显示图片，则代表 opencv 已经安装成功了。
 
+为了避免重复输入命令，我们在根目录下创建一个.vocode文件夹，再创建一个 task.json 文件。
+- .vscode/tasks.json
+
+文件内容为：
+```
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.o",
+                "`pkg-config",
+                "opencv",
+                "--libs",
+                "--cflags",
+                "opencv`"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}
+```
+
+之后通过快捷键 command + shift + b 即可快速生成产物。
+然后通过 ./test.o 执行生产的产物。
 
 参考：
 https://segmentfault.com/a/1190000019604411
